@@ -7,11 +7,11 @@ Provides a REST endpoint to control TasBot for BotBash over RC with the help of 
 - REST endpoint is default on port 8080 and can be set with the `PORT` environment variable.
 - Default COM port is `/dev/ttyACM0`, can be set with the `COMPORT` environment variable.
 - Before starting, install the dependencies with either yarn (execute `yarn` in the cloned directory) or npm with`npm --install`. Then build with `yarn build` and start with `yarn serve` (or with npm).
+- It then exposes `/left`, `/right`, `/front`, `/back` as GET endpoints. 
 
 The setup is as follow:
 
 ![schematic](schematic.png)
-
 
 ## Debugging
 
