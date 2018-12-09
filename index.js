@@ -1,18 +1,25 @@
-// import http from "http";
 import express from "express";
+import SerialPort from "serialport";
+
 const app = express();
 const port = process.env.PORT || 8080;
+const comPort = process.env.COMPORT || "/dev/ttyACM0";
 
-// http
-//   .createServer((req, res) => {
-//     res.writeHead(200, { "Content-Type": "text/plain" });
-//     res.end("Hello World\n");
-//   })
-//   .listen(8080, "127.0.0.1");
+const serialPort = new SerialPort(comPort, {
+  baudRate: 9600
+});
 
-app.get("/", (req, res, next) => {
-    throw new Error("test")
-  res.status(200).send(JSON.stringify({ test: "test" }));
+app.get("/:action", (req, res, next) => {
+  const validActions = ["left", "right", "front", "back"];
+  const { action } = req.params;
+  if (!validActions.includes(action)) {
+    throw new Error(
+      "Invalid action. Valid actions are left, right, front, back"
+    );
+  }
+  serialPort.write(action[0]);
+
+  res.status(200).send(JSON.stringify({ status: "success" }));
 });
 
 app.use((err, req, res, next) => {
